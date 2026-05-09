@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://imlghrg5gac5"]
+
+[ext_resource type="Shader" uid="uid://5rmmmx6wcogu" path="res://scenes/objects/shade.gdshader" id="1_bntui"]
+[ext_resource type="Texture2D" uid="uid://4ipevmfigxgj" path="res://accets/game/Objects/Basic_Grass_Biom_things.png" id="1_msy0l"]
+[ext_resource type="Script" uid="uid://chgdjuet0ymsu" path="res://scenes/objects/rocks/rock.gd" id="2_bntui"]
+[ext_resource type="PackedScene" uid="uid://ccc8o4g450wmx" path="res://scenes/components/hurt_component.tscn" id="2_f5itc"]
+[ext_resource type="PackedScene" uid="uid://bngsw3rcpef7" path="res://scenes/components/damage_component.tscn" id="3_bntui"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8i8v8"]
+resource_local_to_scene = true
+shader = ExtResource("1_bntui")
+shader_parameter/shake_intensity = 0.0
+shader_parameter/shake_speed = 18.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8i8v8"]
+atlas = ExtResource("1_msy0l")
+region = Rect2(128, 16, 16, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wj66e"]
+radius = 4.0
+height = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ms1l0"]
+radius = 7.0
+
+[node name="Rock" type="Sprite2D" unique_id=109519129]
+material = SubResource("ShaderMaterial_8i8v8")
+position = Vector2(0, -5)
+texture = SubResource("AtlasTexture_8i8v8")
+script = ExtResource("2_bntui")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=79602344]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=447230495]
+shape = SubResource("CapsuleShape2D_wj66e")
+
+[node name="HurtComponent" parent="." unique_id=1399990720 instance=ExtResource("2_f5itc")]
+position = Vector2(0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtComponent" unique_id=1219821965]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_ms1l0")
+debug_color = Color(0.88571864, 0.0003038013, 0.80846727, 0.41960785)
+
+[node name="DamageComponent" parent="." unique_id=1920780704 instance=ExtResource("3_bntui")]
+max_damage = 5

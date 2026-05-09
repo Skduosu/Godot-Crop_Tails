@@ -14,7 +14,7 @@ radius = 8.0
 texture = SubResource("AtlasTexture_p2mks")
 
 [node name="CollectableComponent" parent="." unique_id=1723792442 instance=ExtResource("2_p2mks")]
-collectable_name = "Log"
+collectable_name = "原木"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectableComponent" unique_id=1071323969]
 shape = SubResource("CircleShape2D_tiefq")

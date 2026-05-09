@@ -14,5 +14,5 @@ func apply_damage(damage: int) -> void:
 	print("小树正在被攻击")
 	
 	if current_damage == max_damage:
-		print("小树正在被攻击")
+		print("原木掉落了！！！")
 		max_damaged_reached.emit()
