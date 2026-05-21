@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://d2vynyspocsso"]
+
+[ext_resource type="Texture2D" uid="uid://dvf6lmy5m3iuj" path="res://accets/game/Characters/Free Chicken Sprites.png" id="1_be5x3"]
+[ext_resource type="Script" uid="uid://ok6nbilt13el" path="res://scenes/characters/chicken/chicken.gd" id="1_r6a33"]
+[ext_resource type="Script" uid="uid://cqfvse581237y" path="res://scripts/state_machine/node_state_machine.gd" id="2_awcwn"]
+[ext_resource type="Script" uid="uid://wqe2vi845le8" path="res://scenes/characters/npc_states/idle_state.gd" id="3_31inw"]
+[ext_resource type="Script" uid="uid://dfv4hntj8lif6" path="res://scenes/characters/npc_states/walk_state.gd" id="4_31inw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rsly8"]
+atlas = ExtResource("1_be5x3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awcwn"]
+atlas = ExtResource("1_be5x3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r6a33"]
+atlas = ExtResource("1_be5x3")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asyyu"]
+atlas = ExtResource("1_be5x3")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hv82h"]
+atlas = ExtResource("1_be5x3")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wh5lc"]
+atlas = ExtResource("1_be5x3")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_31inw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rsly8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awcwn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r6a33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asyyu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hv82h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wh5lc")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_be5x3"]
+radius = 4.0
+
+[node name="Chicken" type="CharacterBody2D" unique_id=1831723402]
+collision_layer = 64
+script = ExtResource("1_r6a33")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1073380751]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_31inw")
+animation = &"walk"
+autoplay = "idle"
+frame = 3
+frame_progress = 0.20262428
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622817600]
+visible = false
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_be5x3")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1222286179]
+path_desired_distance = 10.0
+path_postprocessing = 1
+avoidance_enabled = true
+radius = 5.0
+debug_enabled = true
+debug_use_custom = true
+
+[node name="StateMachine" type="Node" parent="." unique_id=58667508 node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("2_awcwn")
+initial_node_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="StateMachine" unique_id=244530891 node_paths=PackedStringArray("character", "animated_sprite_2d")]
+script = ExtResource("3_31inw")
+character = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="walk" type="Node" parent="StateMachine" unique_id=1566497038 node_paths=PackedStringArray("character", "animated_sprite_2d", "navigation_agent_2d")]
+script = ExtResource("4_31inw")
+character = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+navigation_agent_2d = NodePath("../../NavigationAgent2D")

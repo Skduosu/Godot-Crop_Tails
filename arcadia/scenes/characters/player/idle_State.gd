@@ -1,4 +1,4 @@
-# 绑定静止状态
+# 绑定玩家状态机默认静止状态
 extends NodeState
 
 @export var player: Player
